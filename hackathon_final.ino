@@ -156,7 +156,120 @@ void loop() {
     
     //Tea case
     case 2:
-      break;
+        if(wl==0)
+        digitalWrite(motor, LOW);
+        else if (wl == 1)   //Water level is medium
+        {
+           switch(env())
+           {   //env() is environment function that returns values ranging from 1-3 as per temperature and humidity(high or low). 1: Case when most water is req
+           case 1:
+           if (moisture() == 0)
+           { //moisture() function returns 1 if high, 0 if low
+           motorOn(70000,350000); //motorOn(t1, t2) switches the motor on for t1 ms (filling time of treatment chamber)and off for t2 ms(emptying time of chamber)... Let the best case be 1.5 mins and 7.5 mins
+           delay(850000); //Wait 22.5 mins for entire dripping
+           }
+           if(moisture()==1)
+           {
+            motorOn(60000,250000);
+            delay(750000);
+           }
+           if(moisture()==2)
+           {
+            digitalWrite(motor, LOW);
+             }
+           break;
+           case 2:
+            if (moisture() == 0)
+            { 
+            motorOn(40000,250000); //1min , 5 mins
+            delay(650000); //Wait 15 mins for entire dripping
+            }
+            if(moisture()==1)
+            {
+              motorOn(30000,150000);
+              delay(550000);
+            }
+            if(moisture()==2) 
+            {
+            digitalWrite(motor, LOW);
+            }
+            break;
+        
+           case 3:
+           if (moisture() == 0) 
+           { 
+            motorOn(20000,100000);  //0.5min, 2.5 mins
+            delay(300000); //Wait 7.5 mins for entire dripping
+           }
+           if(moisture()==1)
+           {
+            motorOn(15000,50000)
+            delay(150000);
+           }
+           if(moisture()==2)
+           {
+            digitalWrite(motor, LOW);
+           }
+          break;
+         }
+      }
+      
+      else {  //Water level is maximum
+
+         switch(env())
+         {   //env() is environment function that returns values ranging from 1-3 as per temperature and humidity(high or low). 1: Case when most water is req
+          case 1:
+          if (moisture() == 0) 
+          { //moisture() function returns 1 if high, 0 if low
+          motorOn(90000,400000); //motorOn(t1, t2) switches the motor on for t1 ms (filling time of Treatment chamber)and off for t2 ms(emptying time)... Let the best case be 2 mins and 10 mins
+          delay(1300000); //Wait 30 mins for entire dripping
+          }
+          if(moisture()==1)
+          {
+          motorOn(70000,300000);
+          delay(1100000);
+          }
+          if(moisture()==2)
+          {
+            digitalWrite(motor, LOW);
+          }
+          break;
+        
+         case 2:
+          if (moisture() == 0) 
+          { 
+            motorOn(70000,300000); //1.5mins , 7.5 mins
+            delay(1000000); //Wait 22.5 mins for entire dripping
+          }
+          if(moisture()==1)
+          {
+            motorOn(50000,200000);
+            delay(650000);
+          }
+          if(moisture()==2) 
+          {
+            digitalWrite(motor, LOW);
+          }
+          break;
+        
+         case 3:
+          if (moisture() == 0)
+          { 
+            motorOn(40000,350000);  //1 min, 5 mins
+            delay(650000); //Wait 15 mins for entire dripping
+          }
+          if(moisture()==1)
+          {
+            motorOn(30000,200000);
+            delay(450000);
+          }
+          if(moisture()==2) 
+          {
+            digitalWrite(motor, LOW);
+          }
+          break;
+         }
+      break;// break from tea case
   }
 
 
